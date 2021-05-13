@@ -527,7 +527,7 @@ export class Snake extends LineRenderer
         });
 
         this.camera.shake = 0;
-        SnakeGame.instance.eventEmitter.emit("gameover", this.actualLength);
+        SnakeGame.instance.eventEmitter.emit("gameover", { length: this.actualLength });
     }
     get head() { return this.bodies[this.bodies.length - 1] }
     get tail() { return this.bodies[0] }

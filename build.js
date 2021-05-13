@@ -7,7 +7,7 @@ const serve = process.argv.includes("--serve");
 
 /** @type {esbuild.BuildOptions} */
 const options = {
-    entryPoints: ["src/index.ts"],
+    entryPoints: ["src/pages/index.tsx"],
     bundle: true,
     outdir: "dist",
     loader: {

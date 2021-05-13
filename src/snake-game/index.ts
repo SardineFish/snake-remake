@@ -2,24 +2,20 @@ import noisejs from "noisejs";
 import * as ZograEnginePackage from "zogra-engine";
 import { Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine } from "zogra-engine";
 import * as ZograRendererPackage from "zogra-renderer";
-import "../assets/style/style.css";
 import { loadAssets } from "./assets";
 import { GameCamera } from "./game-camera";
 import { GameMap } from "./map";
+import { GameScore } from "./score";
 import { Snake } from "./snake";
 
 (window as any).Noise = noisejs.Noise;
 (window as any).ZograEngine = ZograEnginePackage;
 (window as any).ZograRenderer = ZograRendererPackage;
 
-const canvas = document.querySelector("#canvas") as HTMLCanvasElement;
-const rect = canvas.getBoundingClientRect();
-canvas.width = rect.width;
-canvas.height = rect.height;
-
 interface GameEvents
 {
-    gameover(length: number): void,
+    gameover(score: GameScore): void,
+    start(): void,
 }
 
 export class SnakeGame
@@ -107,6 +103,8 @@ export class SnakeGame
         }
         scene.add(snake);
 
+        this.eventEmitter.emit("start");
+
         camera.followTarget = snake.headEntity;
         camera.position = snake.headEntity.position.clone().setZ(20);
     }
@@ -120,10 +118,3 @@ export class SnakeGame
         this.eventEmitter.off(event, listener);
     }
 }
-
-(async () =>
-{
-    const game = new SnakeGame(canvas);
-    await game.loadAssets();
-    game.reload();
-})();

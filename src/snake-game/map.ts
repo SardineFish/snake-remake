@@ -1,5 +1,5 @@
 import { Chunk, Color, Sprite, TextureImporter, TileData, Tilemap, TilemapCollider, vec2 } from "zogra-engine";
-import imgCheckBoard from "../assets/img/checkboard.png";
+import imgCheckBoard from "../../assets/img/checkboard.png";
 import noisejs from "noisejs";
 
 let Noise = new noisejs.Noise();
