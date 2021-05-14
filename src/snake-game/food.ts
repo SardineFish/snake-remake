@@ -1,6 +1,7 @@
 import { Animator, BoxCollider, SpriteObject, Time, Timeline } from "zogra-engine";
 import { vec2, vec3 } from "zogra-renderer";
 import { GameAssets } from "./assets";
+import { Block } from "./score";
 
 
 export const foodCountdownTimeline = Timeline({
@@ -62,10 +63,18 @@ export const foodSpawnTimeline = Timeline({
     }
 });
 
-export class Food extends SpriteObject
+export interface IFood
+{
+    stateBlock: Block;
+    score: number;
+}
+
+export class Food extends SpriteObject implements IFood
 {
     foodSize = 0.5;
     animator = new Animator();
+    stateBlock: Block = null as any;
+    score = 1;
 
     constructor(pos: vec2)
     {

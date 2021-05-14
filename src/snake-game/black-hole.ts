@@ -1,12 +1,17 @@
 import { Timeline, Animator, Time, Entity, BoxCollider, Light2D, ParticleSystem } from "zogra-engine";
 import { vec2, vec3, Color } from "zogra-renderer";
+import { IFood } from "./food";
+import { Block } from "./score";
 
 
-export class BlackHole extends Entity
+export class BlackHole extends Entity implements IFood
 {
     light: Light2D;
     particle: ParticleSystem;
     animator = new Animator<unknown, BlackHole>();
+
+    stateBlock: Block = null as any;
+    score = 0;
 
     static timelineSpawn = Timeline({
         duration: 2,

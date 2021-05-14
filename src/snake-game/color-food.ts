@@ -1,9 +1,11 @@
 import { Animator, Time, Entity, BoxCollider, Light2D } from "zogra-engine";
 import { vec2, MathUtils, vec3, Color } from "zogra-renderer";
 import noisejs from "noisejs";
+import { IFood } from "./food";
+import { Block } from "./score";
 const { Noise } = noisejs;
 
-export class ColorFood extends Entity
+export class ColorFood extends Entity implements IFood
 {
     foodSize = 0.3;
     lights: Light2D[] = [];
@@ -11,6 +13,10 @@ export class ColorFood extends Entity
     color: Color;
     animator = new Animator();
     shakeRange = 0;
+
+    stateBlock: Block = null as any;
+    score = 3;
+
     constructor()
     {
         super();

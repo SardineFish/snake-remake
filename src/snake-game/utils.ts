@@ -49,3 +49,8 @@ export function WeightedRandom<T>(items: WeightedRandom<T>)
         return items[items.length - 1].value;
     }
 }
+export function hex(bufferView: ArrayBufferView)
+{
+    const buffer = new Uint8Array(bufferView.buffer, bufferView.byteOffset, bufferView.byteLength);
+    return [...buffer].map(x => x.toString(16).padStart(2, "0")).join("");
+}

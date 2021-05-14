@@ -2,12 +2,14 @@ import { Animator, BoxCollider, boxRaycast, Camera, Collider2D, CollisionInfo2D,
 import { FoodGenerator } from "./food-generator";
 import { BlackHole } from "./black-hole";
 import { ColorFood } from "./color-food";
-import { Food } from "./food";
+import { Food, IFood } from "./food";
 import { GameMap } from "./map";
 import { BoostFood } from "./boost-food";
 import { GameCamera } from "./game-camera";
 import { Debug } from "zogra-renderer/dist/core/global";
 import { SnakeGame } from ".";
+import { Block, EatEvent, InitialData } from "./score";
+import { Structure } from "./struct";
 
 interface SnakeGrowing
 {
@@ -50,6 +52,8 @@ export class Snake extends LineRenderer
     actualLength: number;
     boostTimeout = -1;
     isDead = false;
+
+    state: Block;
 
 
     bodies: vec2[] = [];
@@ -124,8 +128,13 @@ export class Snake extends LineRenderer
         });
         this.points[0].position = mul(this.tailDir, -this.width / 2).plus(this.tail);
 
-
         this.headEntity.position = vec2.mul(this.headDir, -this.width / 2).plus(this.points[this.points.length - 1].position).toVec3(0);
+
+        const data = new InitialData();
+        data.length = this.actualLength;
+        data.seed = 0;
+        this.state = Block.new(data);
+        console.log(Block.serialize(this.state));
     }
     start()
     {
@@ -270,12 +279,28 @@ export class Snake extends LineRenderer
         {
             this.dead();
         }
-        else if (other.entity instanceof Food)
+        if ((other.entity as unknown as IFood)?.score !== undefined)
         {
-            // this.growTail(1, 2);
-            // this.actualLength += 1;
-            this.foodParticle.emit(9, other.entity.position);
-            other.entity.destroy();
+            this.eat(other.entity as IFood & Entity);
+        }
+    }
+    eat(food: Entity & IFood)
+    {
+        {
+            console.log(Block.serialize(food.stateBlock));
+            const data = new EatEvent();
+            data.x = food.position.x;
+            data.y = food.position.y;
+            data.food = food.stateBlock.hash as Uint8Array;
+            this.state = Block.new(data, this.state);
+            console.log(Block.serialize(this.state));
+
+        }
+        if (food instanceof Food)
+        {
+            this.growTail(food.score, food.score + 1);
+            this.foodParticle.emit(9, food.position);
+            food.destroy();
 
             const range = MathUtils.lerp(this.light.lightRange, this.initialLightRange, 0.8);
             let intensity = MathUtils.lerp(this.light.intensity, this.maxLightIntensity, 0.5);
@@ -286,17 +311,17 @@ export class Snake extends LineRenderer
                 this.light.intensity = MathUtils.lerp(this.light.intensity, intensity, t);
             })
         }
-        else if (other.entity instanceof ColorFood)
+        else if (food instanceof ColorFood)
         {
-            this.growTail(5, 6);
+            this.growTail(food.score, food.score + 1);
             // this.actualLength += 3;
-            const colorFood = other.entity as ColorFood;
+            const colorFood = food as ColorFood;
             const originalColor = this.foodParticle.startColor;
             // this.light.lightColor.plus(colorFood.color).mul(0.5);
             this.foodParticle.startColor = () => vec4.mul(Color.white, colorFood.color, MathUtils.lerp(0.3, 2, Math.random())) as Color;
-            this.foodParticle.emit(16, other.entity.position);
+            this.foodParticle.emit(16, food.position);
             this.foodParticle.startColor = originalColor;
-            other.entity.destroy();
+            food.destroy();
 
             const range = this.initialLightRange;
             const intensity = this.initialLightIntensity;
@@ -310,12 +335,12 @@ export class Snake extends LineRenderer
                 this.ambientIntensity = MathUtils.lerp(this.ambientIntensity, ambient, t);
             })
         }
-        else if (other.entity instanceof BoostFood)
+        else if (food instanceof BoostFood)
         {
             if (this.boostTimeout > 0)
                 clearTimeout(this.boostTimeout);
-            this.foodParticle.emit(9, other.entity.position);
-            other.entity.destroy();
+            this.foodParticle.emit(9, food.position);
+            food.destroy();
 
             const boostSpeed = Math.sqrt(this.speed ** 2 + 10);
             // this.boostAnimator.clear();
@@ -361,7 +386,7 @@ export class Snake extends LineRenderer
                 }
             }), this.camera);
         }
-        else if (other.entity instanceof BlackHole)
+        else if (food instanceof BlackHole)
         {
             // this.growTail(2 - this.currentLength, 2);
             // this.growTail(this.currentLength - 2, this.currentLength - 2);
@@ -404,12 +429,12 @@ export class Snake extends LineRenderer
                     camera.shakeAmplitude = frame.amplitude;
                 }
             }), this.camera);
-            const colorFood = other.entity as BlackHole;
+            const colorFood = food as BlackHole;
             const originalColor = this.foodParticle.startColor;
             this.foodParticle.startColor = () => Color.black;
-            this.foodParticle.emit(16, other.entity.position);
+            this.foodParticle.emit(16, food.position);
             this.foodParticle.startColor = originalColor;
-            other.entity.destroy();
+            food.destroy();
 
             const range = this.light.lightRange * 0.8;
             const intensity = this.light.intensity * 0.8;

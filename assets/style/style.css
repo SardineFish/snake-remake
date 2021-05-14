@@ -116,11 +116,13 @@ ul {
     font-size: 3em;
     margin-bottom: .5em;
     text-align: center;
+    user-select: none;
 }
 
 .game-over .score {
     font-size: 1.6em;
     text-align: center;
+    user-select: none;
 }
 
 .game-over .score .value {
@@ -136,9 +138,10 @@ ul {
 
 .game-over .input-name {
     background-color: transparent;
+    font-size: 1.2em;
     color: #eee;
     border: solid 2px rgba(255, 255, 255, 0.3);
-    padding: .5em 1em;
+    padding: .3em 1em;
     display: flex;
     width: 100%;
     transition: all .3s;

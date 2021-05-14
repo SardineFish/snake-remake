@@ -17,6 +17,9 @@ const options = {
     sourcemap: dev,
     watch: watch,
     platform: "browser",
+    define: {
+        global: "window"
+    }
 }
 
 if (serve)

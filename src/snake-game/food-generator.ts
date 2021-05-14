@@ -3,8 +3,9 @@ import { MathUtils, vec2, Vector2 } from "zogra-renderer";
 import { BlackHole } from "./black-hole";
 import { BoostFood } from "./boost-food";
 import { ColorFood } from "./color-food";
-import { Food } from "./food";
+import { Food, IFood } from "./food";
 import { GameMap } from "./map";
+import { Block, GenFoodEvent } from "./score";
 import { Snake } from "./snake";
 import { WeightedRandom } from "./utils";
 
@@ -16,7 +17,7 @@ const genFood = WeightedRandom([
         {
             const food = new Food(pos);
             generator.snake.scene?.add(food);
-            return food as Entity;
+            return food as Entity & IFood;
         }
     },
     {
@@ -103,6 +104,12 @@ export class FoodGenerator extends Entity
                 this.foods.delete(food);
                 GameMap.instance.getChunkAt(pos).foodCount--;
             });
+            const data = new GenFoodEvent();
+            data.x = pos.x;
+            data.y = pos.y;
+            data.score = food.score;
+            food.stateBlock = Block.new(data, this.snake.state);
+            
             GameMap.instance.getChunkAt(pos).foodCount++;
             this.foods.add(food);
         }

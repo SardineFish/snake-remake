@@ -1,8 +1,9 @@
 import { Animator, BoxCollider, SpriteObject, Time, Timeline, vec2 } from "zogra-engine";
 import { GameAssets } from "./assets";
-import { foodCountdownTimeline, foodLeaveTimeline, foodSpawnTimeline } from "./food";
+import { foodCountdownTimeline, foodLeaveTimeline, foodSpawnTimeline, IFood } from "./food";
+import { Block } from "./score";
 
-export class BoostFood extends SpriteObject
+export class BoostFood extends SpriteObject implements IFood
 {
     static size = 0.6;
     static animBeat = Timeline({
@@ -25,6 +26,10 @@ export class BoostFood extends SpriteObject
         }
     });
 
+
+    stateBlock: Block = null as any;
+    score = 0;
+    
     animator: Animator<unknown, BoostFood> = new Animator(this);
 
     constructor()
