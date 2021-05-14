@@ -6,6 +6,7 @@ import b64 from "base64-js";
 export interface GameScore
 {
     length: number;
+    data: Block[];
 }
 
 export interface Block<T extends Structure = {}, P extends Structure = Structure>

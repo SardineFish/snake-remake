@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { SnakeGame } from "../snake-game";
 import "../../assets/style/style.css";
 import { GameUI } from "../components/game-ui";
-import { GameScore } from "../snake-game/score";
+import { Block, GameScore } from "../snake-game/score";
 
 function Game()
 {
@@ -28,6 +28,7 @@ function Game()
             {
                 setScore(score);
                 setGameState("over");
+                console.log(score.data.map(b => Block.serialize(b)));
             });
             game.on("start", () =>
             {

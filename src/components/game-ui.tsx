@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { div } from "zogra-renderer";
-import { GameScore } from "../snake-game/score";
+import { Block, GameScore } from "../snake-game/score";
 import { match } from "../utils";
 import { GameOverUI } from "./game-over";
 import { MainMenu } from "./main-menu";
@@ -27,9 +27,17 @@ export function GameUI(props: UIProps)
 
     }, [props.state]);
 
-    const scoreSubmit = (name: string) =>
+    const scoreSubmit = async(name: string) =>
     {
-        
+        if (!props.score)
+            return;
+        const rank = SardineFish.Games("http://localhost:3000").Rank.postScore({ key: "snake-remake" }, {
+            name: name,
+            score: props.score.length,
+            data: props.score.data.map(b => Block.serialize(b))
+        });
+        console.log(rank);
+        setPage("rank");
     }
 
     console.log(page);
