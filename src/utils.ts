@@ -5,3 +5,4 @@ export function match<T extends string | number, V>(input: T, conditions: { [key
 {
     return conditions[input];
 }
+

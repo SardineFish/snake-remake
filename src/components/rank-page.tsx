@@ -22,7 +22,6 @@ export function Rank(props: {selfRank?: number, onBack: ()=>void})
             setSkip(0);
             setRefresh({});
         }
-        console.log(context.state);
     }, [context.state]);
     useEffect(() =>
     {

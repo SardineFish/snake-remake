@@ -135,7 +135,6 @@ export class Snake extends LineRenderer
         data.length = this.actualLength;
         data.seed = 0;
         this.state = Block.new(data);
-        // console.log(Block.serialize(this.state));
         this.histories.push(this.state);
     }
     start()
@@ -282,7 +281,6 @@ export class Snake extends LineRenderer
     {
         if (this.isDead)
             return;
-        // console.log(other);
         if (other.entity instanceof GameMap)
         {
             this.dead();
@@ -296,14 +294,12 @@ export class Snake extends LineRenderer
     {
         {
             this.histories.push(food.stateBlock);
-            // console.log(Block.serialize(food.stateBlock));
             const data = new EatEvent();
             data.x = food.position.x;
             data.y = food.position.y;
             data.food = food.stateBlock.hash as Uint8Array;
             this.state = Block.new(data, this.state);
             this.histories.push(this.state);
-            // console.log(Block.serialize(this.state));
 
         }
         if (food instanceof Food)
@@ -373,10 +369,8 @@ export class Snake extends LineRenderer
                 updater: (frame, target: Snake) =>
                 {
                     target.speed = frame.speed;
-                    // console.log(target.speed);
                 }
             }), this);
-            // this.cameraAnimator.clear();
             this.animator.playOn(Tracks.camera, Timeline({
                 duration: 0.9,
                 frames: {

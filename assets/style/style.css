@@ -91,9 +91,6 @@ ul {
     font-size: 1.6em;
 }
 
-.page.active {
-}
-
 .page.ease-out {
     opacity: 0;
     transition: opacity .2s ease-out;
@@ -142,6 +139,11 @@ ul {
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
+}
+
+.game-over .error {
+    margin-top: .5em;
+    user-select: none;
 }
 
 .game-over .input-name {

@@ -28,7 +28,6 @@ function Game()
             {
                 setScore(score);
                 setGameState("over");
-                console.log(score.data.map(b => Block.serialize(b)));
             });
             game.on("start", () =>
             {

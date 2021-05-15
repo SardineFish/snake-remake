@@ -144,7 +144,6 @@ export class FoodGenerator extends Entity
 
             if (GameMap.instance.getTile(pos) === GameMap.tileGround)
             {
-                // console.log(i);
                 return pos;
             }
         }

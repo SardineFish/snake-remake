@@ -12,13 +12,13 @@ declare type ParamInfo<T extends TypeNames> = T extends any ? {
 declare type OptionalParams<T extends {
     [key: string]: ParamInfo<TypeNames>;
 }> = {
-    [key in keyof T as T[key]["optional"] extends true ? key : never]: TypeOfName<T[key]["type"]>;
-};
+        [key in keyof T as T[key]["optional"] extends true ? key : never]: TypeOfName<T[key]["type"]>;
+    };
 declare type RequiredParams<T extends {
     [key: string]: ParamInfo<TypeNames>;
 }> = {
-    [key in keyof T as T[key]["optional"] extends true ? never : key]: TypeOfName<T[key]["type"]>;
-};
+        [key in keyof T as T[key]["optional"] extends true ? never : key]: TypeOfName<T[key]["type"]>;
+    };
 declare type ValueType<T extends ParamsDeclare> = Required<RequiredParams<T>> & Partial<OptionalParams<T>>;
 declare type ParamsDeclare = {
     [key: string]: ParamInfo<TypeNames>;
@@ -47,17 +47,30 @@ export declare const Validators: {
     bypass: typeof validateByPass;
     positive: typeof validatePositive;
 };
+export declare enum ClientErrorCode
+{
+    Error = -1,
+    InvalidParameter = -2,
+    NetworkFailure = -3,
+    ParseError = -4
+}
+export declare class APIError extends Error
+{
+    code: number;
+    constructor(code: number, message: string);
+}
 declare class ApiBuilder<Method extends HTTPMethods, Path extends ParamsDeclare, Query extends ParamsDeclare, Data extends ParamsDeclare | any | undefined, Response> {
     private method;
-    private baseUrl;
     private url;
     private pathInfo;
     private queryInfo;
     private dataInfo;
     private redirectOption?;
-    constructor(method: Method, url: string, path: Path, query: Query, data: Data);
-    base(baseUrl: string): this;
+    private requestMode;
+    constructor(method: Method, mode: RequestMode, url: string, path: Path, query: Query, data: Data);
+    base(baseUrl: string): ApiBuilder<Method, Path, Query, Data, unknown>;
     path<NewPath extends SimpleParamsDeclare>(path: NewPath): ApiBuilder<Method, FullParamsDeclare<NewPath>, Query, Data, Response>;
+    mode(mode: RequestMode): ApiBuilder<Method, Path, Query, Data, unknown>;
     query<NewQuery extends SimpleParamsDeclare>(query: NewQuery): ApiBuilder<Method, Path, FullParamsDeclare<NewQuery>, Data, Response>;
     body<T>(): ApiBuilder<Method, Path, Query, T, Response>;
     body<NewData extends SimpleParamsDeclare>(data: NewData): ApiBuilder<Method, Path, Query, FullParamsDeclare<NewData>, Response>;
@@ -68,4 +81,4 @@ declare class ApiBuilder<Method extends HTTPMethods, Path extends ParamsDeclare,
 }
 export declare function api<Method extends HTTPMethodsWithBody>(method: Method, url: string): ApiBuilder<Method, {}, {}, {}, any>;
 export declare function api<Method extends HTTPMethodsWithoutBody>(method: Method, url: string): ApiBuilder<Method, {}, {}, undefined, any>;
-export {};
+export { };
