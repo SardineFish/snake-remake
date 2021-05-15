@@ -5,6 +5,7 @@ import { match } from "../utils";
 import { GameOverUI } from "./game-over";
 import { MainMenu } from "./main-menu";
 import { Page, PageSelect } from "./page";
+import { Rank } from "./rank-page";
 
 interface UIProps
 {
@@ -27,11 +28,11 @@ export function GameUI(props: UIProps)
 
     }, [props.state]);
 
-    const scoreSubmit = async(name: string) =>
+    const scoreSubmit = async (name: string) =>
     {
         if (!props.score)
             return;
-        const rank = SardineFish.Games("http://localhost:3000").Rank.postScore({ key: "snake-remake" }, {
+        const rank = await SardineFish.Games("http://localhost:3000").Rank.postScore({ key: "snake-remake" }, {
             name: name,
             score: props.score.length,
             data: props.score.data.map(b => Block.serialize(b))
@@ -44,10 +45,13 @@ export function GameUI(props: UIProps)
 
     return (<PageSelect active={page}>
         <Page key="main">
-            <MainMenu onStart={props.onGameStart} />
+            <MainMenu onStart={props.onGameStart} onRank={() => setPage("rank")} onSettings={() => void 0} />
         </Page>
         <Page key="over">
-            <GameOverUI visible={true} onSubmit={scoreSubmit} onSkip={() => setPage("main")}/>
+            <GameOverUI visible={true} onSubmit={scoreSubmit} onSkip={() => setPage("main")} />
+        </Page>
+        <Page key="rank">
+            <Rank onBack={()=>setPage("main")}/>
         </Page>
     </PageSelect>);
 }

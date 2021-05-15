@@ -1,4 +1,9 @@
-import { RankedScore } from "./SardineFish.API";
+export interface RankedScore
+{
+    name: String;
+    score: number;
+    time: number;
+}
 declare const GameAPI: (baseUrl?: string) => {
     Rank: {
         getRankedScores: (params: Required<{
@@ -23,4 +28,3 @@ declare global
         const Games: typeof GameAPI;
     }
 }
-export default GameAPI;

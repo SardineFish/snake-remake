@@ -25,7 +25,7 @@ const options = {
 if (serve)
 {
     esbuild.serve({
-        host: "localhost",
+        host: "0.0.0.0",
         port: 8000,
         servedir: ".",
     }, options);
