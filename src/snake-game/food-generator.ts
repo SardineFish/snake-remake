@@ -21,7 +21,7 @@ const genFood = WeightedRandom([
         }
     },
     {
-        weight: 0.5,
+        weight: 0.3,
         value: (generator, pos) =>
         {
             GameMap.instance.setTile(pos, GameMap.tileFood);
