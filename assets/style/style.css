@@ -89,20 +89,27 @@ ul {
 
 .main-menu {
     font-size: 1.6em;
-    transition: opacity 1s;
 }
 
 .page.active {
-    opacity: 1;
 }
 
-.page.inactive {
+.page.ease-out {
     opacity: 0;
-    pointer-events: none;
+    transition: opacity .2s ease-out;
 }
-
-.page.inactive * {
-    cursor: default;
+.page.ease-in {
+    opacity: 0;
+}
+.page.present {
+    opacity: 1;
+    transition: opacity .2s ease-in;
+}
+.page.hidden {
+    opacity: 0;
+}
+.page.inactive {
+    pointer-events: none;
 }
 
 .game-over {
@@ -246,6 +253,9 @@ ul {
 }
 .rank .rank-table td:last-child, th:first-child {
     border-right: none 0;
+}
+.rank .rank-table tfoot td {
+    padding: 1em;
 }
 
 .rank .actions {
