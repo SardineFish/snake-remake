@@ -57,7 +57,7 @@ const genFood = WeightedRandom([
 
 export class FoodGenerator extends Entity
 {
-    spawnInterval: [number, number] = [1, 2];
+    spawnInterval: [number, number] = [0.5, 0.7];
     spawnRadius = 15;
     foodSize = 0.5;
     foodDistance = 3;
@@ -84,7 +84,7 @@ export class FoodGenerator extends Entity
     {
         if (this.snake.isDead)
             return;
-        const count = Math.round(MathUtils.lerp(1, 3, Math.pow(Math.random(), 2)));
+        const count = 1; //Math.round(MathUtils.lerp(1, 3, Math.pow(Math.random(), 2)));
         for (let i = 0; i < count; i++)
         {
             this.spawnOne();

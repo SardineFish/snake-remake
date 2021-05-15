@@ -90,7 +90,7 @@ export class Food extends SpriteObject implements IFood
 
     async start()
     {
-        await this.animator.play(foodSpawnTimeline, this, 5);
+        await this.animator.play(foodSpawnTimeline, this, 10);
         await this.animator.play(foodCountdownTimeline, this, 5);
         await this.animator.play(foodLeaveTimeline, this);
         this.destroy();

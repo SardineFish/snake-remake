@@ -44,7 +44,7 @@ export class BoostFood extends SpriteObject implements IFood
     async start()
     {
         this.animator.play(BoostFood.animBeat, this, Number.POSITIVE_INFINITY);
-        await this.animator.play(foodSpawnTimeline, this, 5);
+        await this.animator.play(foodSpawnTimeline, this, 10);
         await this.animator.play(foodCountdownTimeline, this, 5);
         await this.animator.play(foodLeaveTimeline, this);
         this.destroy();

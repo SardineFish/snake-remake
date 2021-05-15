@@ -10,8 +10,8 @@ export async function loadAssets()
         foodSprite: new Sprite(await TextureImporter.url(imgFood).then(r => r.tex2d()), vec2.one(), vec2.zero()),
         boostSprite: new Sprite(await TextureImporter.url(imgBoost).then(r=>r.tex2d()), vec2.one(), vec2.zero()),
     };
-    assets.foodSprite.color = new Color(2, 2, 2, 1);
-    assets.boostSprite.color = new Color(3, 3, 3, 1);
+    assets.foodSprite.color = new Color(3, 3, 3, 1);
+    assets.boostSprite.color = new Color(4, 4, 4, 1);
 
     Object.assign(GameAssets, assets);
     return assets;

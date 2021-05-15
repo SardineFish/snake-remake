@@ -443,11 +443,11 @@ export class Snake extends LineRenderer
             const range = this.light.lightRange * 0.8;
             const intensity = this.light.intensity * 0.8;
             const ambient = this.ambientIntensity * 0.2;
-            this.animator.playProceduralOn(Tracks.light, 2, t =>
+            this.animator.playProceduralOn(Tracks.light, 2, (t, dt) =>
             {
-                this.light.lightRange = MathUtils.lerp(this.light.lightRange, range, t);
-                this.light.intensity = MathUtils.lerp(this.light.intensity, intensity, t);
-                this.ambientIntensity = MathUtils.lerp(this.ambientIntensity, ambient, t);
+                this.light.lightRange = MathUtils.damp(this.light.lightRange, range, 2, dt);
+                this.light.intensity = MathUtils.damp(this.light.intensity, intensity, 2, dt);
+                this.ambientIntensity = MathUtils.damp(this.ambientIntensity, ambient, 2, dt);
             });
         }
     }
