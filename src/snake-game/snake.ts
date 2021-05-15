@@ -37,7 +37,7 @@ export class Snake extends LineRenderer
     initialAmbient = 0.2;
     maxLightIntensity = 0.6;
 
-    intensityDropDamping = () => 160 * Math.log(this.actualLength);
+    intensityDropDamping = () => 16 * Math.log(this.actualLength);
     lightRangeDropDamping = () => 50 * Math.log(this.actualLength);
     ambientDropDamping = () => 10 * Math.log(this.actualLength);
 
