@@ -17,6 +17,7 @@ body {
     Verdana,
     sans-serif;
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 * {
@@ -49,6 +50,7 @@ input {
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;
+    max-width: 100%;
 
     transition: all 1s;
 }
@@ -201,6 +203,7 @@ ul {
     flex-flow: column nowrap;
     align-items: center;
     user-select: none;
+    max-width: 100%;
 }
 
 .rank .title {
@@ -217,7 +220,9 @@ ul {
     border-spacing: 0;
     display: block;
     max-height: 60%;
+    max-width: 100%;
     overflow-y: scroll;
+    overflow-x: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
     -webkit-mask: linear-gradient(to bottom, black, black calc(100% - 2.5em), transparent 100%);
@@ -286,4 +291,28 @@ ul {
 .rank .actions {
     margin-top: 3em;
     font-size: 1.6em;
+}
+
+@media screen and (max-width:400px) {
+    .game-over .title {
+        font-size: 2em;
+    }
+
+    .game-over .input-name {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .rank .title {
+        font-size: 2em;
+    }
+
+    .rank .self-score {
+        font-size: 1em;
+    }
+
+    .button {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
