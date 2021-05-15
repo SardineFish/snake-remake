@@ -59,7 +59,7 @@ export function GameOverUI(props: GameOverProps)
             <input className="input-name" type="text" value={name} placeholder="Your Name" onChange={e => setName(e.target.value)} />
             <div className="error">{error || <>&nbsp;</>}</div>
             <div className="actions">
-                <div className="button" onClick={props.onSkip}>Skip</div>
+                <div className="button skip" onClick={props.onSkip}>Skip</div>
                 <div className="button" onClick={submit}>Submit</div>
             </div>
         </div>

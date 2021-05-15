@@ -1,3 +1,5 @@
+@import url(../font/Titillium_Web/TitilliumWeb.css);
+
 body {
     position: absolute;
     width: 100%;
@@ -5,7 +7,15 @@ body {
     margin: 0;
     background-color: black;
     color: #eee;
-    font-family: 'Open Sans', Roboto, Segoe UI, Microsoft YaHei UI, Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Titillium Web',
+    'Open Sans',
+    Roboto,
+    Segoe UI,
+    Microsoft YaHei UI,
+    Tahoma,
+    Geneva,
+    Verdana,
+    sans-serif;
     overflow-y: hidden;
 }
 
@@ -57,6 +67,7 @@ ul {
     cursor: pointer;
     opacity: 0.6;
     transition: all .3s;
+    color: white;
 }
 
 .button:hover {
@@ -177,6 +188,13 @@ ul {
     padding: .5em .5em;
 }
 
+.game-over .skip {
+    opacity: 0.4;
+}
+.game-over .skip:hover {
+    opacity: 0.7;
+}
+
 .rank {
     height: 80%;
     display: flex;
@@ -189,12 +207,16 @@ ul {
     font-size: 3em;
 }
 
+.rank .self-score {
+    font-size: 1.6em;
+}
+
 .rank .rank-table {
-    margin-top: 4em;
+    margin-top: 3em;
     font-size: 1.2em;
     border-spacing: 0;
     display: block;
-    max-height: 40%;
+    max-height: 60%;
     overflow-y: scroll;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -230,6 +252,7 @@ ul {
 }
 .rank .rank-table tbody td:nth-child(1)::before {
     content: "#";
+    margin-right: .2em;
 }
 .rank .rank-table th {
     font-size: 1em;

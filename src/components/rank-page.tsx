@@ -1,8 +1,9 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { RankedScore } from "../API";
+import { API } from "../api-addr";
 import { PageContext } from "./page";
 
-export function Rank(props: {selfRank?: number, onBack: ()=>void})
+export function Rank(props: {selfRank?: number, selfScore?: number, onBack: ()=>void})
 {
     const [scores, setScores] = useState<RankedScore[]>([]);
     const [skip, setSkip] = useState(0);
@@ -26,7 +27,11 @@ export function Rank(props: {selfRank?: number, onBack: ()=>void})
     useEffect(() =>
     {
         load();
-    }, [refresh]);
+    }, [skip, refresh]);
+    // useEffect(() =>
+    // {
+    //     scroll();
+    // }, [skip]);
 
     const load = async () =>
     {
@@ -34,7 +39,7 @@ export function Rank(props: {selfRank?: number, onBack: ()=>void})
             return;
         setLoading(true);
 
-        const fetchedScores = await SardineFish.Games("http://localhost:3000").Rank.getRankedScores({ key: "snake-remake", count: 10, skip, });
+        const fetchedScores = await API.Rank.getRankedScores({ key: "snake-remake", count: 10, skip, });
         setScores([...scores, ...fetchedScores]);
         if (fetchedScores.length <= 0)
             setHasMore(false);
@@ -54,7 +59,10 @@ export function Rank(props: {selfRank?: number, onBack: ()=>void})
 
     return (<div className="rank">
         <header className="title">RANKING</header>
-        <table className="rank-table" ref={ref} onScroll={scroll}>
+        {props.selfRank && props.selfScore ? <p className="self-score">
+            You are at #{props.selfRank + 1} with score {props.selfScore}
+        </p> : null}
+        <table className="rank-table" ref={ref} onScroll={scroll} onWheel={scroll}>
             <colgroup>
                 <col className="col-rank" />
                 <col className="col-score" />
@@ -71,14 +79,19 @@ export function Rank(props: {selfRank?: number, onBack: ()=>void})
             </thead>
             <tbody>
                 {scores.map((score, idx) => (<tr key={idx}>
-                    <td>{idx}</td>
+                    <td>{scores.filter(s=>s.score > score.score).length + 1}</td>
                     <td>{score.score}</td>
                     <td>{score.name}</td>
                     <td>{new Date(score.time).toLocaleString()}</td>
                 </tr>))}
             </tbody>
             <tfoot>
-                <td colSpan={4} align="center">{loading?"Loading...": "No More"}</td>
+                <tr>
+                    <td colSpan={4} align="center">{
+                        loading ? "Loading..." :
+                            hasMore ? <>&nbsp;</>
+                                : "No More"}</td>
+                </tr>
             </tfoot>
         </table>
         <div className="actions">

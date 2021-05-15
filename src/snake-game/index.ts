@@ -54,7 +54,7 @@ export class SnakeGame
         window.onresize = () =>
         {
             const rect = canvas.getBoundingClientRect();
-            this.engine.renderer.setSize(rect.width, rect.height);
+            this.engine.renderer.setSize(rect.width * window.devicePixelRatio, rect.height * window.devicePixelRatio);
         };
     }
     async loadAssets()

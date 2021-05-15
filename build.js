@@ -11,14 +11,16 @@ const options = {
     bundle: true,
     outdir: "dist",
     loader: {
-        ".png": "dataurl"
+        ".png": "dataurl",
+        ".ttf": "file",
     },
     minify: !dev,
     sourcemap: dev,
     watch: watch,
     platform: "browser",
     define: {
-        global: "window"
+        global: "window",
+        DEBUG: dev,
     }
 }
 

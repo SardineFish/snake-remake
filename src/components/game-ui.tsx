@@ -18,6 +18,7 @@ interface UIProps
 export function GameUI(props: UIProps)
 {
     const [page, setPage] = useState<"main" | "over" | "rank" | "none">("none");
+    const [selfScore, setSelfScore] = useState<[number, number] | undefined>();
 
     useEffect(() =>
     {
@@ -31,7 +32,7 @@ export function GameUI(props: UIProps)
 
     const scoreSubmit = async (rank: number, score: number, name: string) =>
     {
-
+        setSelfScore([score, rank]);
         setPage("rank");
     }
 
@@ -43,7 +44,7 @@ export function GameUI(props: UIProps)
             <GameOverUI visible={true} score={props.score} onSubmit={scoreSubmit} onSkip={() => setPage("main")} />
         </Page>
         <Page key="rank">
-            <Rank onBack={()=>setPage("main")}/>
+            <Rank onBack={() => setPage("main")} selfScore={selfScore?.[0]} selfRank={selfScore?.[1]}/>
         </Page>
     </PageSelect>);
 }
