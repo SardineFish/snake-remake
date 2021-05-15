@@ -69,7 +69,7 @@ export function SettingsPage(props: {settings: GameSettings, onChange?: (setting
                 value={hdr}
                 onSet={setHDR}
                 options={{
-                    "LDR": "disable",
+                    "SDR": "disable",
                     "HDR F16": "16bit",
                     "HDR F32": "32bit",
                 }}

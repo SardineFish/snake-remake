@@ -1,6 +1,6 @@
 import noisejs from "noisejs";
 import * as ZograEnginePackage from "zogra-engine";
-import { Animator, Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, MathUtils, MSAASamples, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine } from "zogra-engine";
+import { Animator, Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, MathUtils, MSAASamples, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine, ZograRenderer } from "zogra-engine";
 import * as ZograRendererPackage from "zogra-renderer";
 import { loadAssets } from "./assets";
 import { GameCamera } from "./game-camera";
@@ -71,6 +71,18 @@ export class SnakeGame
         this.settings = settings;
         this.engine.renderPipeline.msaa = settings.msaaSamples as MSAASamples;
         const rect = this.canvas.getBoundingClientRect();
+        switch (settings.hdr)
+        {
+            case "disable":
+                this.engine.renderPipeline.renderFormat = TextureFormat.RGBA8;
+                break;
+            case "16bit":
+                this.engine.renderPipeline.renderFormat = TextureFormat.RGBA16F;
+                break;
+            case "32bit":
+                this.engine.renderPipeline.renderFormat = TextureFormat.RGBA32F;
+                break;
+        }
         this.engine.renderer.setSize(rect.width * settings.resolutionScale + 1, rect.height * settings.resolutionScale);
         this.engine.renderer.setSize(rect.width * settings.resolutionScale - 1, rect.height * settings.resolutionScale);
     }
