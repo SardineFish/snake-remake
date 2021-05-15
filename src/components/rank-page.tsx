@@ -60,7 +60,7 @@ export function Rank(props: {selfRank?: number, selfScore?: number, onBack: ()=>
     return (<div className="rank">
         <header className="title">RANKING</header>
         {props.selfRank && props.selfScore ? <p className="self-score">
-            You are at #{props.selfRank + 1} with score {props.selfScore}
+            You achived #{props.selfRank + 1} with score {props.selfScore}
         </p> : null}
         <table className="rank-table" ref={ref} onScroll={scroll} onWheel={scroll}>
             <colgroup>
