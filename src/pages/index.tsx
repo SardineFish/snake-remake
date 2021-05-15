@@ -32,7 +32,6 @@ function Game()
             });
             game.on("start", () =>
             {
-                setGameState("started");
             });
             await game.loadAssets();
             setGame(game);
@@ -41,6 +40,7 @@ function Game()
 
     const start = () =>
     {
+        setGameState("started");
         if (!game)
             return;
         game.reload();

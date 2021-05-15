@@ -251,7 +251,7 @@ ul {
 .rank .rank-table td:first-child, th:first-child {
     border-left: none 0;
 }
-.rank .rank-table td:last-child, th:first-child {
+.rank .rank-table td:last-child, th:last-child {
     border-right: none 0;
 }
 .rank .rank-table tfoot td {

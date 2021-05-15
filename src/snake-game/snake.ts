@@ -108,10 +108,11 @@ export class Snake extends LineRenderer
 
         this.light.shadowType = ShadowType.Soft;
         this.light.lightRange = 15;
-        this.light.intensity = 0.4;
+        this.light.intensity = 0;
         this.light.lightColor = new Color(1, 1, 1, 1);
         this.light.volumnRadius = this.width / 3;
         this.light.attenuation = -0.8;
+        this.ambientIntensity = 0;
 
         for (const body of this.bodies)
         {
@@ -144,6 +145,12 @@ export class Snake extends LineRenderer
         this.scene?.add(this.deadParticle);
         this.scene?.add(this.headEntity);
         this.scene?.add(this.light, this.headEntity);
+
+        this.animator.playProceduralOn(Tracks.light, 1, (t, dt) =>
+        {
+            this.light.intensity = MathUtils.lerp(0, this.initialLightIntensity, t);
+            this.ambientIntensity = MathUtils.lerp(0, this.initialAmbient, t);
+        });
     }
     update(time: Time)
     {

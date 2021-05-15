@@ -1,6 +1,6 @@
 import noisejs from "noisejs";
 import * as ZograEnginePackage from "zogra-engine";
-import { Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine } from "zogra-engine";
+import { Animator, Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, MathUtils, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine } from "zogra-engine";
 import * as ZograRendererPackage from "zogra-renderer";
 import { loadAssets } from "./assets";
 import { GameCamera } from "./game-camera";
@@ -26,6 +26,8 @@ export class SnakeGame
     
     /** @internal */
     eventEmitter = new EventEmitter<GameEvents>();
+    animator = new Animator();
+    snake?: Snake;
     
     constructor(canvas: HTMLCanvasElement)
     {
@@ -38,7 +40,7 @@ export class SnakeGame
 
         this.input = new InputManager();
         this.engine.start();
-        this.engine.on("update", () =>
+        this.engine.on("update", (time) =>
         {
             this.input.update();
 
@@ -46,6 +48,7 @@ export class SnakeGame
             {
                 this.reload();
             }
+            this.animator.update(time.deltaTime);
         });
 
         window.onresize = () =>
@@ -61,6 +64,14 @@ export class SnakeGame
     }
     async reload()
     {
+        await this.animator.playProceduralOn(0, 0.5, (t, dt) =>
+        {
+            if (this.snake)
+            {
+                this.snake.light.intensity = MathUtils.lerp(this.snake.light.intensity, 0, t);
+                this.snake.ambientIntensity = MathUtils.lerp(this.snake.ambientIntensity, 0, t);
+            }
+        })
         this.engine.scene.destroy();
         const scene = new Scene(Physics2D);
         this.engine.scene = scene;
@@ -101,6 +112,7 @@ export class SnakeGame
                 break;
             }
         }
+        this.snake = snake;
         scene.add(snake);
 
         this.eventEmitter.emit("start");
