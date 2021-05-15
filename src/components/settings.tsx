@@ -4,7 +4,7 @@ import { keyof } from "../utils";
 import { SelectGroup } from "./select";
 
 
-export function SettingsPage(props: {settings: GameSettings, onChange?: (settings: GameSettings)=>void, onExit?:()=>void})
+export function SettingsPage(props: { settings: GameSettings, onChange?: (settings: GameSettings) => void, onExit?: () => void })
 {
     const [res, setRes] = useState(props.settings.resolutionScale);
     const [msaa, setMSAA] = useState(props.settings.msaaSamples);
@@ -30,20 +30,31 @@ export function SettingsPage(props: {settings: GameSettings, onChange?: (setting
         props.onChange?.(settings);
     }
 
+    const resolutionOptions = {
+        "50%": 0.5,
+        "75%": 0.75,
+        "100%": 1,
+        "150%": 1.5,
+        "200%": 2,
+    };
+    if (!keyof(resolutionOptions, window.devicePixelRatio))
+    {
+        (resolutionOptions as Record<string, number>)
+        [
+            (window.devicePixelRatio * 100)
+                .toLocaleString(undefined, { maximumFractionDigits: 0 }) + "%"
+        ]
+            = window.devicePixelRatio;
+    }
+
     return (<div className="settings-page">
         <header className="title">Settings</header>
         <ul className="settings">
             <Setting
                 name="Resolution"
-                value={res}
+                value={window.devicePixelRatio}
                 onSet={setRes}
-                options={{
-                    "50%": 0.5,
-                    "75%": 0.75,
-                    "100%": 1,
-                    "150%": 1.5,
-                    "200%": 2,
-                }} />
+                options={resolutionOptions} />
             <Setting
                 name="MSAA"
                 value={msaa}
