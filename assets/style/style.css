@@ -1,5 +1,7 @@
 @import url(../font/Titillium_Web/TitilliumWeb.css);
 
+@import url(./settings.css);
+
 body {
     position: absolute;
     width: 100%;

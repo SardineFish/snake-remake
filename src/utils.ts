@@ -6,3 +6,7 @@ export function match<T extends string | number, V>(input: T, conditions: { [key
     return conditions[input];
 }
 
+export function keyof<T>(record: Record<string, T>, value: T)
+{
+    return Object.keys(record).find(k => record[k] === value);
+}

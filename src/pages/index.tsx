@@ -4,6 +4,7 @@ import { SnakeGame } from "../snake-game";
 import "../../assets/style/style.css";
 import { GameUI } from "../components/game-ui";
 import { Block, GameScore } from "../snake-game/score";
+import { GameSettings } from "../snake-game/settings";
 
 function Game()
 {
@@ -45,9 +46,20 @@ function Game()
         game.reload();
     }
 
+    const settingsChange = (settings: GameSettings) =>
+    {
+        game?.updateSettings(settings);
+    };
+
     return (<>
         <canvas id="canvas" ref={ref}></canvas>
-        <GameUI state={gameState} score={score} onGameStart={start}/>
+        <GameUI
+            state={gameState}
+            score={score}
+            settings={game?.settings}
+            onGameStart={start}
+            onSettingsChange={settingsChange}
+        />
     </>)
 }
 

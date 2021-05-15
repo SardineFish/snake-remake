@@ -1,11 +1,12 @@
 import noisejs from "noisejs";
 import * as ZograEnginePackage from "zogra-engine";
-import { Animator, Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, MathUtils, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine } from "zogra-engine";
+import { Animator, Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, MathUtils, MSAASamples, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine } from "zogra-engine";
 import * as ZograRendererPackage from "zogra-renderer";
 import { loadAssets } from "./assets";
 import { GameCamera } from "./game-camera";
 import { GameMap } from "./map";
 import { GameScore } from "./score";
+import { GameSettings } from "./settings";
 import { Snake } from "./snake";
 
 (window as any).Noise = noisejs.Noise;
@@ -21,18 +22,26 @@ interface GameEvents
 export class SnakeGame
 {
     static instance: SnakeGame;
+    canvas: HTMLCanvasElement;
     engine: ZograEngine<Default2DRenderPipeline>;
     input: InputManager;
     
     /** @internal */
     eventEmitter = new EventEmitter<GameEvents>();
     animator = new Animator();
+    settings: GameSettings = {
+        hdr: "16bit",
+        msaaSamples: 2,
+        postprocess: true,
+        resolutionScale: 1
+    }
     snake?: Snake;
     
     constructor(canvas: HTMLCanvasElement)
     {
         SnakeGame.instance = this;
 
+        this.canvas = canvas;
         this.engine = new ZograEngine(canvas, Default2DRenderPipeline);
         this.engine.renderPipeline.ambientIntensity = 0.2;
         this.engine.renderPipeline.msaa = 4;
@@ -54,8 +63,16 @@ export class SnakeGame
         window.onresize = () =>
         {
             const rect = canvas.getBoundingClientRect();
-            this.engine.renderer.setSize(rect.width * window.devicePixelRatio, rect.height * window.devicePixelRatio);
+            this.engine.renderer.setSize(rect.width * this.settings.resolutionScale, rect.height * this.settings.resolutionScale);
         };
+    }
+    updateSettings(settings: GameSettings)
+    {
+        this.settings = settings;
+        this.engine.renderPipeline.msaa = settings.msaaSamples as MSAASamples;
+        const rect = this.canvas.getBoundingClientRect();
+        this.engine.renderer.setSize(rect.width * settings.resolutionScale + 1, rect.height * settings.resolutionScale);
+        this.engine.renderer.setSize(rect.width * settings.resolutionScale - 1, rect.height * settings.resolutionScale);
     }
     async loadAssets()
     {
@@ -82,10 +99,13 @@ export class SnakeGame
         camera.viewHeight = 10;
         scene.add(camera);
 
-        const bloom = new Bloom();
-        bloom.threshold = 1.0;
-        bloom.softThreshold = 0.5;
-        camera.postprocess.push(bloom);
+        if (this.settings.postprocess)
+        {
+            const bloom = new Bloom();
+            bloom.threshold = 1.0;
+            bloom.softThreshold = 0.5;
+            camera.postprocess.push(bloom);
+        }
 
         const tilemap = new GameMap(Math.random());
         scene.add(tilemap);
