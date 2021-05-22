@@ -20,6 +20,7 @@ body {
     sans-serif;
     overflow-y: hidden;
     overflow-x: hidden;
+    user-select: none;
 }
 
 * {

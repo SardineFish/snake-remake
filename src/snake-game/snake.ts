@@ -1,4 +1,4 @@
-import { Animator, BoxCollider, boxRaycast, Camera, Collider2D, CollisionInfo2D, Color, dot, Entity, InputManager, Keys, Light2D, LineRenderer, MathUtils, minus, mul, ParticleSystem, plus, ShadowType, Time, Timeline, vec2, vec4, Vector2 } from "zogra-engine";
+import { Animator, BoxCollider, boxRaycast, Camera, Collider2D, CollisionInfo2D, Color, dot, Entity, InputManager, Keys, Light2D, LineRenderer, MathUtils, minus, mul, ParticleSystem, plus, ShadowType, Time, Timeline, TouchState, vec2, vec4, Vector2 } from "zogra-engine";
 import { FoodGenerator } from "./food-generator";
 import { BlackHole } from "./black-hole";
 import { ColorFood } from "./color-food";
@@ -37,9 +37,9 @@ export class Snake extends LineRenderer
     initialAmbient = 0.2;
     maxLightIntensity = 0.6;
 
-    intensityDropDamping = () => 16 * Math.log(this.actualLength);
-    lightRangeDropDamping = () => 50 * Math.log(this.actualLength);
-    ambientDropDamping = () => 10 * Math.log(this.actualLength);
+    intensityDropDamping = () => 160 * Math.log(this.actualLength);
+    lightRangeDropDamping = () => 500 * Math.log(this.actualLength);
+    ambientDropDamping = () => 100 * Math.log(this.actualLength);
 
     speed = 3;
     width = 0.6;
@@ -61,6 +61,8 @@ export class Snake extends LineRenderer
     inputQueue: vec2[] = [];
     camera: GameCamera;
     input: InputManager;
+    touchStart = vec2.zero();
+    touchThreshold = 0.2;
 
     foodGenerator: FoodGenerator;
     growingQueue: SnakeGrowing[] = [];
@@ -474,6 +476,32 @@ export class Snake extends LineRenderer
         if (this.input.getKeyDown(Keys.S) || this.input.getKeyDown(Keys.Down))
         {
             this.inputQueue.push(vec2.down());
+        }
+        
+        if (this.input.touches[0])
+        {
+            if (this.input.touches[0].state & TouchState.Started)
+            {
+                console.log(this.input.touches[0].state)
+                this.touchStart = this.input.touches[0].pos;
+            }
+            else
+            {
+                const delta = vec2.minus(this.input.touches[0].pos, this.touchStart);
+                const screenSize = SnakeGame.instance.canvas.width > SnakeGame.instance.canvas.height
+                    ? SnakeGame.instance.canvas.height
+                    : SnakeGame.instance.canvas.width;
+                console.log(Math.abs(delta.x) / screenSize, Math.abs(delta.y) / screenSize);
+                if (Math.abs(delta.x) / screenSize > this.touchThreshold || Math.abs(delta.y) / screenSize > this.touchThreshold)
+                {
+                    if (Math.abs(delta.x) > Math.abs(delta.y))
+                        this.inputQueue.push(vec2(Math.sign(delta.x), 0));
+                    else
+                        this.inputQueue.push(vec2(0, -Math.sign(delta.y)));
+                    this.touchStart = this.input.touches[0].pos;
+                }
+            }
+
         }
         if (this.inputQueue.length > this.inputCacheSize)
             this.inputQueue = this.inputQueue.slice(this.inputQueue.length - this.inputCacheSize);

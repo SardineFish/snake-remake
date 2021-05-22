@@ -21,7 +21,8 @@ const options = {
     define: {
         global: "window",
         DEBUG: dev,
-    }
+    },
+    target: ["es2015"],
 }
 
 if (serve)
