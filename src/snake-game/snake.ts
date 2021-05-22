@@ -37,9 +37,9 @@ export class Snake extends LineRenderer
     initialAmbient = 0.2;
     maxLightIntensity = 0.6;
 
-    intensityDropDamping = () => 160 * Math.log(this.actualLength);
-    lightRangeDropDamping = () => 500 * Math.log(this.actualLength);
-    ambientDropDamping = () => 100 * Math.log(this.actualLength);
+    intensityDropDamping = () => 16 * Math.log(this.actualLength);
+    lightRangeDropDamping = () => 50 * Math.log(this.actualLength);
+    ambientDropDamping = () => 10                                                                                                                                                                         * Math.log(this.actualLength);
 
     speed = 3;
     width = 0.6;
@@ -548,6 +548,7 @@ export class Snake extends LineRenderer
     async dead()
     {
         this.isDead = true;
+        this.growingQueue = [];
         // this.speed = 0;
         this.animator.playProceduralOn(Tracks.light, 1, (t, dt) =>
         {
