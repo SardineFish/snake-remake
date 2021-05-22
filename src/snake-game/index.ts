@@ -109,6 +109,10 @@ export class SnakeGame
         camera.position = vec3(0, 0, 20);
         camera.projection = Projection.Orthographic;
         camera.viewHeight = 10;
+        if (this.canvas.height > this.canvas.width)
+        {
+            camera.viewHeight = 10 * 1.2;
+        }
         scene.add(camera);
 
         if (this.settings.postprocess)

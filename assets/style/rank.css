@@ -1,0 +1,120 @@
+.rank {
+    height: 80%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    user-select: none;
+    max-width: 100%;
+}
+
+.rank .title {
+    font-size: 3em;
+}
+
+.rank .self-score {
+    font-size: 1.6em;
+}
+
+.rank .rank-table {
+    margin-top: 3em;
+    font-size: 1.2em;
+    border-spacing: 0;
+    display: block;
+    max-height: 60%;
+    max-width: 100%;
+    overflow-y: scroll;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-mask: linear-gradient(to bottom, black, black calc(100% - 2.5em), transparent 100%);
+    mask: linear-gradient(to bottom, black, black calc(100% - 2.5em), transparent 100%);
+}
+
+.rank .rank-table::-webkit-scrollbar {
+    display: none;
+}
+
+.rank .rank-table col {
+    border-left: solid 1px white;
+    border-right: solid 1px white;
+}
+
+.rank .col-rank {
+    width: 10em;
+}
+
+.rank .col-score {
+    width: 10em;
+}
+
+.rank .col-name {
+    width: 20em;
+}
+
+.rank .rank-table td {
+    padding: .2em 2em;
+}
+
+.rank .rank-table tbody td:nth-child(4) {
+    font-size: 0.8em;
+    font-size: 0.8em;
+    color: #aaa;
+    white-space: nowrap;
+}
+
+.rank .rank-table tbody td:nth-child(1)::before {
+    content: "#";
+    margin-right: .2em;
+}
+
+.rank .rank-table th {
+    font-size: 1em;
+    font-weight: bolder;
+    padding: .5em 2em;
+    background-color: #444;
+    position: sticky;
+    top: 0;
+}
+
+.rank .rank-table tbody tr {
+    transition: all .1s;
+}
+
+.rank .rank-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: all 0;
+}
+
+.rank .rank-table td,
+th {
+    border-left: solid 1px rgba(255, 255, 255, 0.1);
+    border-right: solid 1px rgba(255, 255, 255, 0.1);
+}
+
+.rank .rank-table td:first-child,
+th:first-child {
+    border-left: none 0;
+}
+
+.rank .rank-table td:last-child,
+th:last-child {
+    border-right: none 0;
+}
+
+.rank .rank-table tfoot td {
+    padding: 1em;
+}
+
+.rank .actions {
+    margin-top: 3em;
+    font-size: 1.6em;
+}
+.rank .rank-table td {
+    white-space: nowrap;
+}
+
+@media screen and (max-width: 600px) {
+    .rank .rank-table {
+        font-size: 1em;
+    }
+}

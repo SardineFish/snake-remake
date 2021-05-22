@@ -55,3 +55,25 @@
 .settings-page .button {
     padding: .5em .5em;
 }
+
+@media screen and (max-width: 800px) {
+    .settings .setting-item {
+        flex-flow: column nowrap;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .settings {
+        font-size: 1.2em;
+    }
+
+    .settings-page .title {
+        font-size: 2em;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .settings {
+        font-size: 1em;
+    }
+}

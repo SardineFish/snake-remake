@@ -23,10 +23,14 @@ function Game()
             {
                 const canvas = ref.current;
                 const rect = canvas.getBoundingClientRect();
-                canvas.width = rect.width * window.devicePixelRatio;
-                canvas.height = rect.height * window.devicePixelRatio;
+                const dpr = window.devicePixelRatio > 1.5
+                    ? 1.5
+                    : window.devicePixelRatio;
+                canvas.width = rect.width * dpr;
+                canvas.height = rect.height * dpr;
 
                 const game = new SnakeGame(canvas);
+                game.settings.resolutionScale = dpr;
                 game.on("gameover", score =>
                 {
                     setScore(score);

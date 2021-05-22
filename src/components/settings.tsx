@@ -52,11 +52,11 @@ export function SettingsPage(props: { settings: GameSettings, onChange?: (settin
         <ul className="settings">
             <Setting
                 name="Resolution"
-                value={window.devicePixelRatio}
+                value={res}
                 onSet={setRes}
                 options={resolutionOptions} />
             <Setting
-                name="MSAA"
+                name="Anti-Aliasing"
                 value={msaa}
                 onSet={setMSAA}
                 options={{

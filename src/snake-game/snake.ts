@@ -62,7 +62,7 @@ export class Snake extends LineRenderer
     camera: GameCamera;
     input: InputManager;
     touchStart = vec2.zero();
-    touchThreshold = 0.2;
+    touchThreshold = 0.1;
 
     foodGenerator: FoodGenerator;
     growingQueue: SnakeGrowing[] = [];
@@ -199,8 +199,13 @@ export class Snake extends LineRenderer
 
             // Change camera view range by move speed.
             const headSpeed = headMovement / time.deltaTime;
-            const viewHeight = MathUtils.mapClamped(0, 6, 7, 13, headSpeed);
-            const damping = headSpeed <= 3.1 ? 2 : 0.5;
+            let viewHeight = MathUtils.mapClamped(0, 6, 7, 13, headSpeed);
+            let damping = headSpeed <= 3.1 ? 2 : 0.5;
+            if (SnakeGame.instance.canvas.height > SnakeGame.instance.canvas.width)
+            {
+                viewHeight *= 1.2;
+                damping = headSpeed <= 3.1 ? 1 : 0.3;
+            }
             this.camera.viewHeight = MathUtils.damp(this.camera.viewHeight, viewHeight, damping, time.deltaTime);
 
             // Move head entity and collider
@@ -482,7 +487,6 @@ export class Snake extends LineRenderer
         {
             if (this.input.touches[0].state & TouchState.Started)
             {
-                console.log(this.input.touches[0].state)
                 this.touchStart = this.input.touches[0].pos;
             }
             else
@@ -491,7 +495,6 @@ export class Snake extends LineRenderer
                 const screenSize = SnakeGame.instance.canvas.width > SnakeGame.instance.canvas.height
                     ? SnakeGame.instance.canvas.height
                     : SnakeGame.instance.canvas.width;
-                console.log(Math.abs(delta.x) / screenSize, Math.abs(delta.y) / screenSize);
                 if (Math.abs(delta.x) / screenSize > this.touchThreshold || Math.abs(delta.y) / screenSize > this.touchThreshold)
                 {
                     if (Math.abs(delta.x) > Math.abs(delta.y))

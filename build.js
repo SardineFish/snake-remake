@@ -20,7 +20,7 @@ const options = {
     platform: "browser",
     define: {
         global: "window",
-        DEBUG: dev,
+        DEBUG: false,
     },
     target: ["es2015"],
 }
