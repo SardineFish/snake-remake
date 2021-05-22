@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { div } from "zogra-renderer";
 import { API } from "../api-addr";
 import { Block, GameScore } from "../snake-game/score";
 import { GameSettings } from "../snake-game/settings";

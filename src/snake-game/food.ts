@@ -1,5 +1,4 @@
-import { Animator, BoxCollider, SpriteObject, Time, Timeline } from "zogra-engine";
-import { vec2, vec3 } from "zogra-renderer";
+import { Animator, BoxCollider, SpriteObject, Time, Timeline, vec2, vec3 } from "zogra-engine";
 import { GameAssets } from "./assets";
 import { Block } from "./score";
 

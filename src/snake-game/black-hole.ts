@@ -1,5 +1,4 @@
-import { Timeline, Animator, Time, Entity, BoxCollider, Light2D, ParticleSystem } from "zogra-engine";
-import { vec2, vec3, Color } from "zogra-renderer";
+import { Timeline, Animator, Time, Entity, BoxCollider, Light2D, ParticleSystem, Color, vec2, vec3 } from "zogra-engine";
 import { IFood } from "./food";
 import { Block } from "./score";
 

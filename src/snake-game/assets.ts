@@ -1,5 +1,4 @@
-import { Sprite } from "zogra-engine";
-import { Color, TextureImporter, vec2 } from "zogra-renderer";
+import { Color, Sprite, TextureImporter, vec2 } from "zogra-engine";
 import imgFood from "../../assets/img/snake-food.png";
 import imgBoost from "../../assets/img/snake-food-boost.png";
 

@@ -1,7 +1,6 @@
 import noisejs from "noisejs";
 import * as ZograEnginePackage from "zogra-engine";
 import { Animator, Bloom, Default2DRenderPipeline, EventEmitter, EventKeys, InputManager, Keys, MathUtils, MSAASamples, Physics2D, Projection, Scene, TextureFormat, vec2, vec3, ZograEngine, ZograRenderer } from "zogra-engine";
-import * as ZograRendererPackage from "zogra-renderer";
 import { loadAssets } from "./assets";
 import { GameCamera } from "./game-camera";
 import { GameMap } from "./map";
@@ -11,7 +10,6 @@ import { Snake } from "./snake";
 
 (window as any).Noise = noisejs.Noise;
 (window as any).ZograEngine = ZograEnginePackage;
-(window as any).ZograRenderer = ZograRendererPackage;
 
 interface GameEvents
 {

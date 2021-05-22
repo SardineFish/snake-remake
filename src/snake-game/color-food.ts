@@ -1,5 +1,4 @@
-import { Animator, Time, Entity, BoxCollider, Light2D } from "zogra-engine";
-import { vec2, MathUtils, vec3, Color } from "zogra-renderer";
+import { Animator, Time, Entity, BoxCollider, Light2D, Color, MathUtils, vec2, vec3 } from "zogra-engine";
 import noisejs from "noisejs";
 import { IFood } from "./food";
 import { Block } from "./score";

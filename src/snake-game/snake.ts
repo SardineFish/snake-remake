@@ -6,7 +6,6 @@ import { Food, IFood } from "./food";
 import { GameMap } from "./map";
 import { BoostFood } from "./boost-food";
 import { GameCamera } from "./game-camera";
-import { Debug } from "zogra-renderer/dist/core/global";
 import { SnakeGame } from ".";
 import { Block, EatEvent, InitialData } from "./score";
 import { Structure } from "./struct";

@@ -1,5 +1,4 @@
-import { Entity } from "zogra-engine";
-import { MathUtils, vec2, Vector2 } from "zogra-renderer";
+import { Entity, MathUtils, vec2, Vector2 } from "zogra-engine";
 import { BlackHole } from "./black-hole";
 import { BoostFood } from "./boost-food";
 import { ColorFood } from "./color-food";
