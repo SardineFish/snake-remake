@@ -2,6 +2,7 @@
 
 @import url(./settings.css);
 @import url(./rank.css);
+@import url(./gameover.css);
 
 body {
     position: absolute;
@@ -127,100 +128,7 @@ ul {
     pointer-events: none;
 }
 
-.game-over {
-    width: 80%;
-    height: 80%;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-}
-
-.game-over .title {
-    font-size: 3em;
-    margin-bottom: .5em;
-    text-align: center;
-    user-select: none;
-}
-
-.game-over .score {
-    font-size: 1.6em;
-    text-align: center;
-    user-select: none;
-}
-
-.game-over .score .value {
-    margin-left: 1em;
-}
-
-.game-over .submit {
-    margin-top: 10em;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-}
-
-.game-over .error {
-    margin-top: .5em;
-    user-select: none;
-}
-
-.game-over .input-name {
-    background-color: transparent;
-    font-size: 1.2em;
-    color: #eee;
-    border: solid 2px rgba(255, 255, 255, 0.3);
-    padding: .3em 1em;
-    display: flex;
-    width: 100%;
-    transition: all .3s;
-}
-
-.game-over .input-name:hover {
-    border: solid 2px rgba(255, 255, 255, 0.6);
-}
-
-.game-over .input-name:focus {
-    border: solid 2px rgba(255, 255, 255, 0.8);
-}
-
-.game-over .actions {
-    margin-top: 2em;
-    font-size: 1.6em;
-    display: flex;
-    flex-flow: row nowrap;
-    align-items: center;
-}
-
-.game-over .button {
-    padding: .5em .5em;
-}
-
-.game-over .skip {
-    opacity: 0.4;
-}
-.game-over .skip:hover {
-    opacity: 0.7;
-}
-
-
-
 @media screen and (max-width:400px) {
-    .game-over .title {
-        font-size: 2em;
-    }
-
-    .game-over .input-name {
-        width: 100%;
-        box-sizing: border-box;
-    }
-
-    .rank .title {
-        font-size: 2em;
-    }
-
-    .rank .self-score {
-        font-size: 1em;
-    }
 
     .button {
         margin-left: 0;

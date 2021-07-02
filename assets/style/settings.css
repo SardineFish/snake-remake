@@ -56,6 +56,19 @@
     padding: .5em .5em;
 }
 
+@media screen and (max-width:1280px) {
+    .settings {
+        margin-top: 1em;
+    }
+    .settings .setting-item {
+        margin: .5em;
+    }
+    .settings-page .actions {
+        margin-top: 1em;
+    }
+
+}
+
 @media screen and (max-width: 800px) {
     .settings .setting-item {
         flex-flow: column nowrap;

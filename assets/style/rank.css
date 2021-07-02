@@ -113,8 +113,32 @@ th:last-child {
     white-space: nowrap;
 }
 
+@media screen and (max-width: 1280px) {
+    .rank .actions {
+        margin-top: 1em;
+    }
+    .rank .rank-table {
+        margin-top: 1em;
+    }
+}
+
 @media screen and (max-width: 600px) {
     .rank .rank-table {
         font-size: 1em;
+    }
+}
+@media screen and (max-width:400px) {
+
+    .rank .title {
+        font-size: 2em;
+    }
+
+    .rank .self-score {
+        font-size: 1em;
+    }
+
+    .button {
+        margin-left: 0;
+        margin-right: 0;
     }
 }
